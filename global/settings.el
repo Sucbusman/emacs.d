@@ -1,0 +1,8 @@
+(setq inhibit-startup-message t)
+(setq-default auto-save-timeout 15)
+(setq make-backup-files nil)
+(electric-pair-mode 1)
+(show-paren-mode 1)
+(law-keystroke)
+(global-set-key (kbd "M-c") 'open-conf)
+(global-set-key (kbd "C-l") 'lookup-current-word)

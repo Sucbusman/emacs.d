@@ -1,0 +1,7 @@
+auto-save-list/*
+elpa/*
+eshell/*
+test.el
+.lsp-session-v1
+init.el
+init.el.bak
