@@ -32,11 +32,14 @@
   (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
   )
 
+(use-package yasnippet
+  :ensure t)
+
 (use-package lsp-mode
   :commands lsp
   :ensure t
   :config
-  (setq lsp-file-watch-threshold 20))
+  (setq lsp-file-watch-threshold 30))
 
 (use-package lsp-ui :commands lsp-ui-mode :ensure t)
 

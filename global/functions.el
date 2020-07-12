@@ -34,6 +34,11 @@
     (kbd "+")  'undo-tree-redo
     (kbd "-")  'undo-tree-undo
     (kbd "M-f") 'find-file
+    (kbd "0") 'delete-window
+    (kbd "1") 'delete-other-windows
+    (kbd "2") 'split-window-below
+    (kbd "3") 'split-window-right
+    (kbd "9") 'other-window
     )
   (evil-define-key nil evil-insert-state-map
     (kbd "M-p") '(lambda () (interactive)(dabbrev-expand 1))

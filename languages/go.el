@@ -3,21 +3,23 @@
   (let ((fn (buffer-file-name)))
     (shell-command (concat "go run " fn))))
 
-(defun my-go-bindings ()
-  "In go mode key bindings"
-  (evil-define-key nil evil-normal-state-map
-    ",r" 'go-run))
-
 (use-package go-mode
   :ensure t
-  :defer
-  :config
-  (my-go-bindings))
+  :defer)
 
 (use-package company-go
   :ensure t
+  :defer
 	:hook ((go-mode) .
 				 (lambda ()
          	(set (make-local-variable 'company-backends) '(company-go))
          	(company-mode))))
 
+(when (fboundp 'go-mode)
+  (defun go-bindings nil
+    "add keybindings in go"
+    (evil-define-key 'normal go-mode-map
+      ",r" 'go-run
+      ",f" 'gofmt
+      ))
+  (add-hook 'go-mode-hook 'go-bindings))

@@ -44,7 +44,7 @@ class Expr < Struct.new :function,:args
   def to_elisp
     "(#{build function}#{
     if args.length>0 then
-      ' '+(args.map {|arg|build arg}.join ' ')
+      ' '+(args.map {|arg|build arg}.join(' '))
     else
       ''
     end
@@ -165,9 +165,9 @@ class Scanner
     get_token :IDENTIFIER
   end
   def tok_number
-    skipUntil {|c| not c.match /[0-9]/ }
+    skipUntil {|c| not c.match(/[0-9]/) }
     if peek == '.'
-      skipUntil {|c| not c.match /[0-9]/ }
+      skipUntil {|c| not c.match(/[0-9]/) }
     end
     get_token :NUMBER
   end
@@ -302,7 +302,7 @@ class Compiler
       scanner = Scanner.new source
       parser  = Parser.new scanner
       compiler = Compiler.new  parser.parse
-      out = compiler.generate
+      compiler.generate
     end
   end
   def generate
@@ -361,4 +361,5 @@ end
 #test_parser
 if $PROGRAM_NAME == __FILE__
   main
+  puts "ok"
 end

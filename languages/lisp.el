@@ -19,15 +19,13 @@
           (lambda ()
             (rainbow-delimiters-mode))))
 (when (fboundp 'emacs-lisp-mode)
-  (message "debug 1")
   (defun elisp-keybindings ()
     "add keybinding in elisp mode"
-    (message "emacs-lisp-mode-hook called!")
     (evil-define-key 'normal emacs-lisp-mode-map
       ",e" 'eval-last-sexp
       ",m" 'merge-init
       )
     (evil-define-key 'visual emacs-lisp-mode-map
-      (kbd "r") 'eval-region)
-    )
-  (add-hook 'emacs-lisp-mode 'elisp-keybindings))
+      (kbd "r") 'eval-region))
+  (add-hook 'emacs-lisp-mode-hook 'elisp-keybindings)
+  (add-hook 'emacs-lisp-mode-hook 'prettify-symbols-mode))

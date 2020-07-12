@@ -26,5 +26,7 @@
 (load-relative-lib "languages/c")
 (load-relative-lib "languages/go")
 (load-relative-lib "languages/lisp")
+;;(load-relative-lib "languages/ruby")
+
 
 ;; shell

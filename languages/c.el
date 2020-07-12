@@ -9,6 +9,7 @@
 
 (use-package ccls
   :ensure t
+  :defer
   :config
   (setq ccls-executable "ccls")
   (setq lsp-prefer-flymake nil)
@@ -18,3 +19,10 @@
   :hook ((c-mode c++-mode objc-mode cuda-mode) .
          (lambda () (require 'ccls) (lsp))))
 
+(when (fboundp 'c-mode)
+  (defun c-keybindings ()
+    "add keybindings in c"
+    (evil-define-key 'normal c-mode-map
+      ",r" 'c-compile-run
+      ))
+  (add-hook 'c-mode-hook 'c-keybindings))
