@@ -15,6 +15,9 @@
   :config
   (which-key-mode))
 
+(use-package helm
+  :ensure t)
+
 (use-package eldoc
   :config
  (eldoc-add-command

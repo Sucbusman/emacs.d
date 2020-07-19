@@ -17,6 +17,28 @@
   (interactive)
   (shell-command (concat "ruby " user-emacs-directory "compress.rb")))
 
+(defun template-helper (conditions)
+  (mapcar #'(lambda (pair)
+             (let ((ext (car pair))
+                   (action (cdr pair)))
+               (list (seq-concatenate 'list
+                                      '(string-equal ext)
+                                      (list ext))
+                     action)))
+          conditions))
+
+(defmacro newfile-template (&rest conditions)
+  `(when (zerop (buffer-size))
+      (let ((ext (file-name-extension (buffer-name)))
+            (fnb (file-name-base (buffer-name))))
+        (cond ,@(template-helper conditions)))))
+
+(defun law-expand-file-name-at-point ()
+  "Use hippie-expand to expand the filename"
+  (interactive)
+  (let ((hippie-expand-try-functions-list '(try-complete-file-name-partially try-complete-file-name)))
+    (call-interactively 'hippie-expand)))
+
 (defun law-keystroke ()
   (global-unset-key (kbd "C-b"))
   (global-unset-key (kbd "C-f"))
@@ -26,27 +48,33 @@
   (global-unset-key (kbd "M-f"))
   (global-unset-key (kbd "M-n"))
   (global-unset-key (kbd "M-p"))
-
+  (global-unset-key (kbd "C-x 0"))
+  (global-unset-key (kbd "C-x 1"))
+  (global-unset-key (kbd "C-x 2"))
+  (global-unset-key (kbd "C-x 3"))
+  (global-unset-key (kbd "C-x 9"))
+  (define-prefix-command 'window-prefix)
+  (global-set-key (kbd "<f12> 0") 'delete-window)
+  (global-set-key (kbd "<f12> 1") 'delete-other-windows)
+  (global-set-key (kbd "<f12> 2") 'split-window-below)
+  (global-set-key (kbd "<f12> 3") 'split-window-right)
+  (global-set-key (kbd "<f12> 9") 'other-window)
   (evil-define-key nil evil-normal-state-map
     ",c" 'open-conf
     ",w" 'save-buffer
-    ",q" 'kill-buffer
+    ",q" '(lambda () (interactive) (kill-buffer) (delete-window))
     (kbd "+")  'undo-tree-redo
     (kbd "-")  'undo-tree-undo
     (kbd "M-f") 'find-file
-    (kbd "0") 'delete-window
-    (kbd "1") 'delete-other-windows
-    (kbd "2") 'split-window-below
-    (kbd "3") 'split-window-right
-    (kbd "9") 'other-window
     )
   (evil-define-key nil evil-insert-state-map
     (kbd "M-p") '(lambda () (interactive)(dabbrev-expand 1))
-    (kbd "M-n") '(lambda () (interactive)(dabbrev-expand -1))
+    (kbd "M-n") '(lambda () (interactive)(dabbrev-expand (- 0 1)))
     (kbd "M-h") 'left-char
     (kbd "M-l") 'right-char
     (kbd "M-k") 'previous-line
     (kbd "M-j") 'next-line
     (kbd "M-e") 'eval-last-sexp
     (kbd "M-r") 'eval-region
+    (kbd "M-f") 'law-expand-file-name-at-point
     ))

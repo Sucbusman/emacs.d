@@ -1,8 +1,8 @@
 #!/bin/ruby
-# 1.parse a elisp file, search "load-relative-lib" cmd
+# 1. parse a elisp file, search "load-relative-lib" cmd
 # and populate this position with library elisp file which
 # are recursivly handle with the same progress
-# 2.report any unmatch parenthesis syntax error
+# 2. report some syntax error,eg.unmatched parenthesis
 DIR =  File.dirname __FILE__
 if ARGV.length < 1
   INIT = DIR+"/template_init.el"
@@ -29,6 +29,24 @@ class Token < Struct.new :type,:literal,:line,:column
   end
 end
 
+def is_quote tok
+  case tok.type
+  when :QUOTE,:BACK_QUOTE,:HASH_QUOTE
+    true
+  else
+    false
+  end
+end
+
+def is_unquote tok
+  case tok.type
+  when :UN_QUOTE,:UN_QUOTE_FLAT
+    true
+  else
+    false
+  end
+end
+
 class Expr < Struct.new :function,:args
   #f:Token args:[Token,...]
   def to_s
@@ -43,17 +61,20 @@ class Expr < Struct.new :function,:args
   end
   def to_elisp
     "(#{build function}#{
-    if args.length>0 then
-      ' '+(args.map {|arg|build arg}.join(' '))
-    else
-      ''
+    s=' ';
+    for arg in args
+      s += build arg
+      if not arg.is_a? Token or not ((is_quote(arg) or is_unquote(arg)))
+        s+=' '
+      end
     end
+    s
     })"
   end
 end
 
 class Scanner
-  IDENTIFIER = /[:@a-zA-Z\+\-\*\/!\?]/
+  IDENTIFIER = /[&:@a-zA-Z\+\-\*\/!\?]/
   def initialize source
     @source = source
     @start = 0
@@ -130,6 +151,22 @@ class Scanner
         return tok_string
       when "'"
         return get_token :QUOTE
+      when '`'
+        return get_token :BACK_QUOTE
+      when '#'
+       if peek == "'"
+         nextChar
+         return get_token :HASH_QUOTE
+       else
+        error("HASH_QUOTE expect ' after #")
+       end
+      when ","
+        if peek == '@'
+          nextChar
+          return get_token :UN_QUOTE_FLAT
+        else
+          return get_token :UN_QUOTE
+        end
       when '('
         return get_token :LEFT_PAREN
       when ')'
