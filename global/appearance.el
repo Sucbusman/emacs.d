@@ -1,7 +1,7 @@
 ;; hide menu bar and tool bar
 (menu-bar-mode 0)
 (tool-bar-mode 0)
-
+(push '(vertical-scroll-bars) default-frame-alist)
 ;; no blink cursor
 (blink-cursor-mode 0)
 
@@ -18,5 +18,5 @@
 
 ;; font
 (add-to-list 'default-frame-alist
-                      '(font . "DejaVu Sans Mono-17"))
+                      '(font . "DejaVu Sans Mono-16"))
 

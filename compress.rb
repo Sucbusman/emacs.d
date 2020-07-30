@@ -151,6 +151,12 @@ class Scanner
         return tok_string
       when "'"
         return get_token :QUOTE
+      when "?"
+        if peek == '\\'
+          nextChar
+        end
+        nextChar
+        return get_token :CHAR
       when '`'
         return get_token :BACK_QUOTE
       when '#'

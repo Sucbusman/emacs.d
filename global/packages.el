@@ -5,6 +5,7 @@
 	;; ESC to switch back normal-state
 	(define-key evil-insert-state-map [escape] 'evil-normal-state))
 
+(setq evil-want-keybinding nil)
 (evil-mode 1)
 
 (use-package try
@@ -29,11 +30,12 @@
   :ensure t
   :commands company-mode
   :config
-  (setq company-tooltip-limit 20)                      ; bigger popup window
-  (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
-  (setq company-echo-delay 0)                          ; remove annoying blinking
+  (setq company-tooltip-limit 20) ; bigger popup window
+  (setq company-idle-delay .5) ; decrease delay before autocompletion popup shows
+  (setq company-echo-delay 0); remove annoying blinking
   (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
-  )
+  (evil-define-key nil evil-insert-state-map
+    (kbd "<tab>") 'company-indent-or-complete-common))
 
 (use-package yasnippet
   :ensure t)
@@ -49,7 +51,10 @@
 (use-package company-lsp
   :commands company-lsp
   :ensure t
-  :config (push 'company-lsp company-backends))
+  :config
+  (push 'company-lsp company-backends)
+  (setq company-lsp-async t)
+  (add-hook 'company-mode-hook (lambda () (yas-minor-mode 1))))
 
 (use-package org-bullets
 	:ensure t

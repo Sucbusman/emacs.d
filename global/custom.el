@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (sml-mode yasnippet which-key use-package try rainbow-delimiters paredit org-bullets lsp-ui helm go-guru go-eldoc flycheck evil-escape evil-collection company-lsp company-go ccls))))
+    (eglot yasnippet which-key use-package try sml-mode rainbow-delimiters paredit org-bullets lsp-ui helm go-guru go-eldoc flycheck evil-escape evil-collection enh-ruby-mode company-lsp company-go clang-format))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

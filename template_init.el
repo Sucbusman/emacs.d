@@ -28,7 +28,8 @@
 (load-relative-lib "languages/lisp")
 (load-relative-lib "languages/org")
 (load-relative-lib "languages/sml")
-;;(load-relative-lib "languages/ruby")
+(load-relative-lib "languages/ruby")
+(load-relative-lib "languages/bindlang")
 
 
 ;; shell
