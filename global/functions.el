@@ -58,6 +58,7 @@
   (global-set-key (kbd "<f12> 1") 'delete-other-windows)
   (global-set-key (kbd "<f12> 2") 'split-window-below)
   (global-set-key (kbd "<f12> 3") 'split-window-right)
+  (global-set-key (kbd "<f12> 8") 'switch-to-buffer)
   (global-set-key (kbd "<f12> 9") 'other-window)
   (evil-define-key nil evil-normal-state-map
     ",c" 'open-conf
@@ -78,3 +79,10 @@
     (kbd "M-r") 'eval-region
     (kbd "M-f") 'law-expand-file-name-at-point
     ))
+
+(defun file-run-helper (cmd)
+  (let (fn fn_noext truecmd)
+    (setq fn (buffer-file-name)
+          fn_noext (file-name-sans-extension fn)
+          truecmd (eval cmd))
+    (shell-command truecmd)))

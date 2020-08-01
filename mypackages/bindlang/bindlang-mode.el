@@ -2,6 +2,7 @@
 (defvar bindlang-mode-map
   (let ((map (make-keymap)))
     (define-key map "\C-j" 'newline-and-indent)
+    (define-key map "\C-l" '(lambda () (interactive) (insert "\\ ->")))
 		map)
   "Keymap for bindlang major mode")
 
@@ -9,7 +10,7 @@
              '("\\.bd\\'" . bindlang-mode))
 
 
-;;(regexp-opt '("->" "+" "-" "*" "/" "=>" "take" "len" "set"
+;;(regexp-opt '("->" "+" "-" "*" "/" "=>" "take" "len" "set!"
 ;;             "=" "\\" "eq" "lt" "gt" "ge" "le" "print") t)
 
 ;;(regexp-opt '("<as>") t)
@@ -17,7 +18,8 @@
 
 (defconst bindlang-highlights
   (list
-   '("\\(->\\|=>\\|eq\\|g[et]\\|l\\(?:en\\|[et]\\)\\|print\\|set\\|take\\|[*+/=\\-]\\)". font-lock-builtin-face)
+   '("\\(->\\|=>\\|eq\\|g[et]\\|l\\(?:en\\|[et]\\)\\|print\\|set!\\|take\\|begin\\|push!\\|pop!\\|[*+/=\\-]\\)"
+     . font-lock-builtin-face)
    '("\\('\\w*'\\)" . font-lock-variable-name-face)
    '("<\\(?:.\\|\\)*?>" . font-lock-type-face))
   "Minimal highlighting expressions for bindlang mode")

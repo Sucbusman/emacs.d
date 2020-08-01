@@ -15,19 +15,16 @@
   (add-hook 'c-mode-hook 'eglot-ensure)
   (add-hook 'c++-mode-hook 'eglot-ensure))
 
-(defun c*-compile-run-helper (compiler)
-  (let (fnc fnb fno)
-    (setq fnc (buffer-file-name)
-          fnb (file-name-sans-extension fnc))
-    (shell-command (concat compiler " " fnc " -o " fnb " && "
-                           fnb))))
+
 (defun c-compile-run ()
   (interactive)
-  (c*-compile-run-helper "gcc"))
+  (file-run-helper '(concat "gcc "  fn " -o " fn_noext
+                           " && " fn_noext)))
 
 (defun c++-compile-run ()
   (interactive)
-  (c*-compile-run-helper "g++"))
+  (file-run-helper '(concat "g++ "  fn " -o " fn_noext
+                           " && " fn_noext)))
 
 (defun make-c*-header (s)
   "use s to generate a c header"

@@ -74,7 +74,7 @@ class Expr < Struct.new :function,:args
 end
 
 class Scanner
-  IDENTIFIER = /[&:@a-zA-Z\+\-\*\/!\?]/
+  IDENTIFIER = /[&:@_a-zA-Z\+\-\*\/!\?]/
   def initialize source
     @source = source
     @start = 0
