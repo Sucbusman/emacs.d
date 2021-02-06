@@ -18,7 +18,7 @@
 	(load (concat user-emacs-directory l ".el")))
 
 (setq custom-file (concat user-emacs-directory "global/custom.el"))
-;;(load-relative-lib "global/custom")
+(load-relative-lib "global/custom")
 (load-relative-lib "global/appearance")
 (load-relative-lib "global/packages")
 (load-relative-lib "global/functions")
@@ -29,7 +29,9 @@
 (load-relative-lib "languages/org")
 (load-relative-lib "languages/sml")
 (load-relative-lib "languages/ruby")
+(load-relative-lib "languages/racket")
+(load-relative-lib "languages/haskell")
 (load-relative-lib "languages/bindlang")
-
-
+(load-relative-lib "languages/dashboard")
+;;(load-relative-lib "languages/java")
 ;; shell

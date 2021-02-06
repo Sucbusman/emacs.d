@@ -4,6 +4,34 @@
 	(browse-url
 	 (concat "https://www.google.com/search?client=firefox-b-d&q=" (thing-at-point
                                                                 'symbol))))
+(use-package request
+  :ensure t)
+
+(defun insert-string (s)
+  "insert char repeatly"
+  (dolist (ch (append s nil))
+    (insert-char ch)))
+
+(defun translate ()
+	(interactive)
+  (let ((query (thing-at-point 'symbol)) (tl "zh_CN"))
+    (when (< 128 (aref query 0))
+        ;;chinese
+      (setq tl "en_US"))
+    (request
+          "http://translate.google.cn/translate_a/single"
+          :params `(("client" . "gtx") ("dt" . "t") ("dj" . "1") ("ie" . "UTF-8") ("sl" . "auto")
+                    ("tl" . ,tl) ("q" . ,query))
+          :parser 'json-read
+          :success (cl-function
+                    (lambda (&key data &allow-other-keys)
+                      (let ((str (assoc-default 'trans (aref (assoc-default 'sentences data) 0))))
+                        (forward-word)
+                        (insert-string str)
+                        (message "%s" str))))
+          :error
+          (cl-function (lambda (&rest args &key error-thrown &allow-other-keys)
+                         (message "Got error: %S" error-thrown))))))
 
 (defun open-conf ()
   "open emacs config to write"
@@ -61,9 +89,10 @@
   (global-set-key (kbd "<f12> 8") 'switch-to-buffer)
   (global-set-key (kbd "<f12> 9") 'other-window)
   (evil-define-key nil evil-normal-state-map
-    ",c" 'open-conf
+    ",op" 'open-plan
     ",w" 'save-buffer
     ",q" '(lambda () (interactive) (kill-buffer) (delete-window))
+    ",t" 'translate
     (kbd "+")  'undo-tree-redo
     (kbd "-")  'undo-tree-undo
     (kbd "M-f") 'find-file
@@ -86,3 +115,14 @@
           fn_noext (file-name-sans-extension fn)
           truecmd (eval cmd))
     (shell-command truecmd)))
+
+(defun copy-left nil
+  "copyleft!"
+  (interactive)
+  (insert (concat "(ɔ)" (shell-command-to-string "date +%Y-%m-%d"))))
+
+(defun open-plan ()
+  "open plan.org"
+  (interactive)
+  (let ((plan-file "~/doc/org/plan.org"))
+    (find-file plan-file)))

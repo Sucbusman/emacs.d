@@ -30,8 +30,8 @@
   :ensure t
   :commands company-mode
   :config
-  (setq company-tooltip-limit 20) ; bigger popup window
-  (setq company-idle-delay .5) ; decrease delay before autocompletion popup shows
+  (setq company-tooltip-limit 18) ; bigger popup window
+  (setq company-idle-delay .8) ; decrease delay before autocompletion popup shows
   (setq company-echo-delay 0); remove annoying blinking
   (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
   (evil-define-key nil evil-insert-state-map

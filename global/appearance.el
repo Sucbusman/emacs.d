@@ -20,3 +20,16 @@
 (add-to-list 'default-frame-alist
                       '(font . "DejaVu Sans Mono-16"))
 
+;; dashboard
+(use-package dashboard
+  :config
+  (dashboard-setup-startup-hook))
+
+(setq dashboard-banner-logo-title "FUTURE")
+;; Set the banner
+(setq dashboard-startup-banner 1)
+
+(set-face-foreground 'mode-line "#ff11ff")
+(set-face-background 'mode-line "#eeffee")
+(set-face-foreground 'mode-line-inactive "#ee22ee")
+(set-face-background 'mode-line-inactive "#eeffee")

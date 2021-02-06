@@ -11,5 +11,6 @@
   (defun bindlang-settings ()
     "settings for bindlang"
     (evil-define-key 'normal bindlang-mode-map
-      ",r" 'bindlang-run))
+      ",r" 'bindlang-run)
+    (rainbow-delimiters-mode))
   (add-hook 'bindlang-mode-hook 'bindlang-settings))

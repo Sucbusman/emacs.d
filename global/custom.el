@@ -3,13 +3,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (yasnippet which-key use-package try sml-mode rainbow-delimiters paredit org-bullets lsp-ui helm go-guru go-eldoc flycheck evil-escape evil-collection enh-ruby-mode eglot company-lsp company-go clang-format))))
+ '(lsp-ui-doc-delay 1)
+ '(org-export-with-sub-superscripts nil))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(lsp-ui-doc-background ((t (:background "dark orange")))))
