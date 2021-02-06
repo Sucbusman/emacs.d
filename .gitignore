@@ -6,12 +6,13 @@ test.el
 init.el
 init.el.bak
 ans
-bookmarks
-recentf
-projects
 request/*
 elpa/*
 meghanada/*
 games/*
 racket-mode/*
 eshell/*
+notes
+bookmarks
+recentf
+projects
