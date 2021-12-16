@@ -7,3 +7,4 @@
 (setq visible-bell 0)
 (global-set-key (kbd "M-c") 'open-conf)
 (global-set-key (kbd "C-l") 'lookup-current-word)
+(global-set-key (kbd "C-=") 'text-scale-adjust)
