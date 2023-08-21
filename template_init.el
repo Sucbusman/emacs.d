@@ -33,5 +33,7 @@
 (load-relative-lib "languages/haskell")
 (load-relative-lib "languages/bindlang")
 (load-relative-lib "languages/dashboard")
+(load-relative-lib "languages/twelf")
+(load-relative-lib "languages/latex")
 ;;(load-relative-lib "languages/java")
 ;; shell
