@@ -7,10 +7,12 @@
                                   "xelatex -interaction nonstopmode %f"))
     (evil-define-key 'normal org-mode-map
       ",e" 'org-export-dispatch
-      ",a" 'org-agenda)
+      ",a" 'org-agenda
+      (kbd "<tab>") 'org-cycle)
     (setq org-todo-keywords
           '((sequence "TODO(t!)" "NEXT(n)" "WAITTING(w)" "SOMEDAY(s)" "|" "DONE(d@/!)" "ABORT(a@/!)")
             ))
+		(setq org-startup-folded t)
     (setq org-agenda-files (list "~/doc/org/inbox.org"
                                  "~/doc/org/plan.org")))
   (add-hook 'org-mode-hook 'org-settings))

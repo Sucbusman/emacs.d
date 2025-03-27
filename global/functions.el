@@ -4,8 +4,6 @@
 	(browse-url
 	 (concat "https://www.google.com/search?client=firefox-b-d&q=" (thing-at-point
                                                                 'symbol))))
-(use-package request
-  :ensure t)
 
 (defun insert-string (s)
   "insert char repeatly"
@@ -126,3 +124,46 @@
   (interactive)
   (let ((plan-file "~/doc/org/plan.org"))
     (find-file plan-file)))
+
+(defun symmetric-encrypt (str shift)
+  "Encrypt STR with Caesar cipher using SHIFT."
+  (apply #'string
+         (mapcar (lambda (c) (+ shift c))
+                 (string-to-list str))))
+
+(defun symmetric-decrypt (str shift)
+  "Decrypt STR with Caesar cipher using SHIFT."
+  (apply #'string
+         (mapcar (lambda (c) (- c shift))
+                 (string-to-list str))))
+
+(defun caesar-encrypt (str &optional shift)
+  "Apply Caesar cipher to visible ASCII (32-126) with optional SHIFT.
+Default SHIFT is 1 (symmetric). Handles both encryption and decryption."
+  (let* ((result "")
+         (shift (or shift 1))
+         (min-char 32)
+         (max-char 126)
+         (range (1+ (- max-char min-char))))
+    (dolist (c (string-to-list str) result)
+      (setq result
+            (concat result
+                   (string
+                    (cond
+                     ((< c min-char) c)  ; leave non-visible chars unchanged
+                     (t
+                      ;; Perform shift with modulo wrapping
+                      (+ min-char
+                         (mod (+ (- c min-char) shift) range))))))))))
+
+(defun read-file-content (file-path)
+  "Read content of FILE-PATH as string."
+  (with-temp-buffer
+    (insert-file-contents file-path)
+    (buffer-string)))
+
+(defun write-bytes-to-file (bytes file-path)
+  "Write BYTES (unibyte string) to FILE-PATH."
+  (with-temp-file file-path
+    (set-buffer-multibyte nil)
+    (insert bytes)))

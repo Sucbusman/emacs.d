@@ -75,6 +75,7 @@ end
 
 class Scanner
   IDENTIFIER = /[&:@_a-zA-Z\+\-\*\/!\?><]/
+  IDENTIFIER2 = /[&:@_a-zA-Z\+\-\*\/!\?><0-9]/
   def initialize source
     @source = source
     @start = 0
@@ -111,6 +112,8 @@ class Scanner
     ["\n",' ',"\t"].include? s
   end
   def skipUntil(&condition)
+    #skip from current until condition
+    #which includes current char, but not includes the last unsatisfiable char
     until (c=peek()) == :EOF
       if yield(c)
         break
@@ -204,13 +207,16 @@ class Scanner
     Token.new :EOF,nil,@line
   end
   def tok_identifier
-    skipUntil {|c| not c.match IDENTIFIER}
+    skipUntil {|c| not c.match IDENTIFIER2}
     get_token :IDENTIFIER
   end
   def tok_number
     skipUntil {|c| not c.match(/[0-9]/) }
     if peek == '.'
+      nextChar
       skipUntil {|c| not c.match(/[0-9]/) }
+    elsif (peek).match IDENTIFIER
+      return tok_identifier
     end
     get_token :NUMBER
   end

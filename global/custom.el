@@ -6,11 +6,12 @@
  '(lsp-ui-doc-delay 1)
  '(org-export-with-sub-superscripts nil)
  '(package-selected-packages
-   '(helm company-auctex cdlatex auctex yasnippet which-key use-package
-          try sml-mode request-deferred rainbow-delimiters racket-mode
-          paredit org-ref org-bullets lsp-ui lsp-haskell go-guru
-          go-eldoc flycheck evil-escape evil-collection enh-ruby-mode
-          eglot dashboard company-lsp company-go clang-format)))
+   '(auctex cdlatex clang-format company-auctex company-go company-lsp
+            dashboard eglot enh-ruby-mode evil-collection evil-escape
+            flycheck go-eldoc go-guru gptel helm lsp-ui org-bullets
+            org-ref paredit racket-mode rainbow-delimiters
+            request-deferred sml-mode try use-package which-key
+            yasnippet)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

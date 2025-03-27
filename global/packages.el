@@ -11,6 +11,9 @@
 (use-package try
   :ensure t)
 
+(use-package request
+  :ensure t)
+
 (use-package which-key
   :ensure t
   :config
@@ -60,3 +63,6 @@
 	:ensure t
 	:config
 	(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+(use-package epg
+  :ensure t)
